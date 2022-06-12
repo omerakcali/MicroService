@@ -41,5 +41,10 @@ namespace MicroService.Controllers{
                 return await Task.FromResult(result);
             }
         }
+        [HttpPost("MapData")]
+        public void AddMarker([FromBody] MapMarker marker)
+        {
+            MapDatabase.SaveMarker(marker);
+        }
     }
 }
