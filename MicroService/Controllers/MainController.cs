@@ -22,7 +22,7 @@ namespace MicroService.Controllers{
             _logger = logger;
         }
 
-        [HttpPost("image"), DisableRequestSizeLimit]
+        [HttpPost("Predict"), DisableRequestSizeLimit]
         public async Task<string> GetPrediction([FromForm] IFormFile image){
             using (var stream = new MemoryStream()){
                 await image.CopyToAsync(stream);
@@ -41,6 +41,19 @@ namespace MicroService.Controllers{
                 return await Task.FromResult(result);
             }
         }
+        
+        [HttpPost("Upload")]
+
+        public async Task UploadImage([FromForm] IFormFile image){
+            using (var stream = new MemoryStream()){
+                await image.CopyToAsync(stream);
+                Bitmap bmp = new Bitmap(stream);
+                string parsed = image.FileName.Substring(0, image.FileName.Length - 4);
+                ImageSaver.UploadImage(bmp,parsed);
+            }
+            
+        }
+        
         [HttpPost("MapData")]
         public void AddMarker([FromBody] MapMarker marker)
         {
