@@ -59,5 +59,11 @@ namespace MicroService.Controllers{
         {
             MapDatabase.SaveMarker(marker);
         }
+
+        [HttpGet("GetWithCoordinate/{lat:float}/{lon:float}")]
+        public List<MapMarker> GetMarkersWithCoordinate(float lat, float lon)
+        {
+            return MapDatabase.GetMarkers(lat, lon);
+        }
     }
 }
